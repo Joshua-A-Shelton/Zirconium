@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using Zirconium.AST.Statements.Expressions;
 
-namespace Zirconium.AST
+namespace Zirconium.AST.Statements
 {
     public abstract class AbstractNode
     {
@@ -38,7 +41,7 @@ namespace Zirconium.AST
         //public abstract void Emit();
         */
         private List<AbstractNode> children;
-        protected IEnumerable<AbstractNode> Children
+        public IReadOnlyList<AbstractNode> Children
         {
             get
             {
@@ -48,18 +51,18 @@ namespace Zirconium.AST
                     var fields = this.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
                     foreach (var field in fields)
                     {
-                        if (field.FieldType == typeof(AbstractNode))
+                        if (field.FieldType.IsAssignableTo(typeof(AbstractNode)))
                         {
                             var val = (AbstractNode) field.GetValue(this);
                             if(val!=null)
                                 children.Add(val);
                         }
-                        else if (field.FieldType.GetInterfaces().Contains(typeof(IEnumerable<AbstractNode>)))
+                        else if (field.FieldType.GetInterfaces().Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>)  && t.GenericTypeArguments[0].IsAssignableTo(typeof(AbstractNode))
+                        ))
                         {
-                            var val = (IEnumerable<AbstractNode>) field.GetValue(this);
-                            if (val != null)
+                            foreach (var child in (IEnumerable)field.GetValue(this))
                             {
-                                children.AddRange(val);
+                                children.Add((AbstractNode)child);
                             }
                         }
                     }

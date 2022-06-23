@@ -1,0 +1,9 @@
+﻿class simpleClass
+{
+    int i;
+    public int I {get{return i;} set{i = value;}}
+    public void Increment_I()
+    {
+        i++;
+    }
+}

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Antlr4.Runtime;
 
-namespace Zirconium.AST
+namespace Zirconium.AST.Statements
 {
     public class ClassFunctionNode: AbstractNode
     {

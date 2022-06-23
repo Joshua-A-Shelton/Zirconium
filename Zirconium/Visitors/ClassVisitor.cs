@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Zirconium.AST;
+using Zirconium.AST.Statements;
 
 namespace Zirconium.Visitors
 {
@@ -139,7 +139,7 @@ namespace Zirconium.Visitors
 
             var type = context.returnableType();
             var typeNode = new TypeNode(type.GetText(), File, type.Start, type.Stop);
-            string id = context.IDENTIFIER().GetText();
+            IdentifierNode id = new IdentifierNode(context.IDENTIFIER(), File);
             //TODO: generics
             List<ParameterDeclarationNode> parameters = new List<ParameterDeclarationNode>();
             foreach (var parameter in context.parameterDeclaration())
@@ -152,14 +152,57 @@ namespace Zirconium.Visitors
             }
 
             ScopeNode scope = context.scope().Accept(new ScopeVisitor(File,PassInfo));
-            return new ClassFunctionNode();
+            return new ClassFunctionNode(access,isStatic,isOverride,isVirtual,id,parameters,scope,File,context.Start,context.Stop);
         }
 
+        //TODO: visit property
         public override AbstractNode VisitProperty(ZirconiumParser.PropertyContext context)
         {
-            return base.VisitProperty(context);
+            ClassFieldNode.Access getAccess = ClassFieldNode.Access.Private;
+            if (context.memberAccessibility() != null)
+            {
+                getAccess = GetAccess(context.memberAccessibility());
+            }
+
+            ClassFieldNode.Access setAccess = getAccess;
+
+            TypeNode type = new TypeNode(context.instanceableType().GetText(), File, context.instanceableType().Start,
+                context.instanceableType().Stop);
+
+            var getSet = context.getSet();
+            if (getSet != null)
+            {
+                ScopeVisitor scopeVisitor = new ScopeVisitor(File, PassInfo);
+                var get =getSet.getscope.Accept(scopeVisitor);
+                if (getSet.memberAccessibility() != null)
+                {
+                    setAccess = GetAccess(getSet.memberAccessibility());
+                }
+                ScopeNode set = null;
+                if (getSet.setscope != null)
+                {
+                    set = getSet.setscope.Accept(scopeVisitor);
+                }
+
+                return new ClassPropertyNode(getAccess, get, setAccess, set, File, context.Start, context.Stop);
+            }
+
+            if (context.autoGetSet().memberAccessibility() != null)
+            {
+                GetAccess(context.autoGetSet().memberAccessibility());
+            }
+
+            bool setIsDefined = false;
+            if (context.autoGetSet().SET() != null)
+            {
+                setIsDefined = true;
+            }
+
+            return new ClassPropertyNode(getAccess, setAccess, setIsDefined, File, context.Start, context.Stop);
+
         }
 
+        //TODO: visit destructor
         public override AbstractNode VisitDestructor(ZirconiumParser.DestructorContext context)
         {
             return base.VisitDestructor(context);

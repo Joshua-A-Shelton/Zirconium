@@ -1,6 +1,6 @@
 ﻿using Antlr4.Runtime.Tree;
 
-namespace Zirconium.AST
+namespace Zirconium.AST.Statements
 {
     public class IdentifierNode: AbstractNode
     {

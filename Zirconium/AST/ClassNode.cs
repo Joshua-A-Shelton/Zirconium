@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Antlr4.Runtime;
 
-namespace Zirconium.AST
+namespace Zirconium.AST.Statements
 {
     public class ClassNode: AbstractNode
     {
@@ -19,7 +19,7 @@ namespace Zirconium.AST
         private List<ClassPropertyNode> properties = new List<ClassPropertyNode>();
         private List<ClassFunctionNode> functions = new List<ClassFunctionNode>();
         private List<ClassConstructorNode> constructors = new List<ClassConstructorNode>();
-        private ClassDestructorNode destructor = new ClassDestructorNode();
+        public ClassDestructorNode Destructor { get; private set; }
 
         public IReadOnlyList<NameSpaceNode> UsingNamespaces
         {
@@ -36,7 +36,7 @@ namespace Zirconium.AST
             this.properties.AddRange(properties);
             this.functions.AddRange(functions);
             this.constructors.AddRange(constructors);
-            this.destructor = destructor;
+            Destructor = destructor;
 
             IsStatic = isStatic;
             IsAbstract = isAbstract;

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Zirconium.AST;
+using Zirconium.AST.Statements;
 
 namespace Zirconium
 {

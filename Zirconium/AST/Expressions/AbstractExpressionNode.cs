@@ -1,13 +1,16 @@
-﻿namespace Zirconium.AST.Expressions
+﻿using Antlr4.Runtime;
+
+namespace Zirconium.AST.Statements.Expressions
 {
-    public abstract class AbstractExpressionNode: AbstractNode
+    public abstract class AbstractExpressionNode: StatementNode
     {
-        public AbstractExpressionNode(string file, int line, int column, int endLine, int endColumn) 
-            : base(file, line, column, endLine, endColumn)
+        public AbstractExpressionNode(string file, IToken first, IToken last) 
+            : base(file, first, last)
         {
         }
         
         public abstract string Type { get; }
+        public abstract bool ModifiesData { get; }
 
         
     }

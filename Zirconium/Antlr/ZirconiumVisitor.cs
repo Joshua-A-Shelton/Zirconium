@@ -188,6 +188,12 @@ public interface IZirconiumVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitParameterDeclaration([NotNull] ZirconiumParser.ParameterDeclarationContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ZirconiumParser.constructor"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitConstructor([NotNull] ZirconiumParser.ConstructorContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ZirconiumParser.destructor"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

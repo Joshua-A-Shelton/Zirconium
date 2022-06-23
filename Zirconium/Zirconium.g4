@@ -25,8 +25,8 @@ classMember: field | function | property | constructor | destructor;
 memberAccessibility: PUBLIC | PRIVATE | PROTECTED | INTERNAL;
 field: memberAccessibility? STATIC? instanceableType IDENTIFIER SEMICOLON;//no preassignment yet
 property: memberAccessibility? instanceableType IDENTIFIER OPENCURLY (getSet | autoGetSet) CLOSECURLY;
-getSet: GET scope (memberAccessibility? SET scope)?;
-autoGetSet: GET SEMICOLON (memberAccessibility? SET SEMICOLON);
+getSet: GET getscope=scope (memberAccessibility? SET setscope=scope)?;
+autoGetSet: GET SEMICOLON (memberAccessibility? SET SEMICOLON)?;
 function: memberAccessibility? functionSpecial? returnableType IDENTIFIER genericDeclaration? OPENPAREN (parameterDeclaration (COMMA parameterDeclaration)*)? CLOSEPAREN (scope | SEMICOLON);
 functionSpecial: STATIC | OVERRIDE | VIRTUAL;
 parameterDeclaration: instanceableType IDENTIFIER;
@@ -58,7 +58,7 @@ if: IF OPENPAREN expression CLOSEPAREN scope;
 elseif: ELSE if;
 else: ELSE scope;
 
-forConstruct: FOR OPENPAREN (initialization (COMMA initialization)*)? SEMICOLON expression? SEMICOLON (expression (COMMA expression)*)? CLOSEPAREN scope;
+forConstruct: FOR OPENPAREN (initialization (COMMA initialization)*)? SEMICOLON condition=expression? SEMICOLON (expression (COMMA expression)*)? CLOSEPAREN scope;
 
 whileConstruct: WHILE OPENPAREN expression CLOSEPAREN scope;
 

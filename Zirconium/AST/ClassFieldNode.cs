@@ -1,7 +1,7 @@
 ﻿using Antlr4.Runtime;
-using Zirconium.AST.Expressions;
+using Zirconium.AST.Statements.Expressions;
 
-namespace Zirconium.AST
+namespace Zirconium.AST.Statements
 {
     public class ClassFieldNode: AbstractNode
     {

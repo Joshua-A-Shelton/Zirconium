@@ -1,4 +1,5 @@
-﻿using Zirconium.AST;
+﻿using System.Collections.Generic;
+using Zirconium.AST.Statements;
 
 namespace Zirconium.Visitors
 {
@@ -10,6 +11,18 @@ namespace Zirconium.Visitors
         {
             File = file;
             CompilationPassInfo = passInfo;
+        }
+
+        public override ScopeNode VisitScope(ZirconiumParser.ScopeContext context)
+        {
+            StatementVisitor statementVisitor = new StatementVisitor(File, CompilationPassInfo);
+            List<StatementNode> statements = new List<StatementNode>();
+            foreach (var statementContext in context.scopeStatement())
+            {
+                statements.Add(statementContext.Accept(statementVisitor));
+            }
+
+            return new ScopeNode(statements, File, context.Start, context.Stop);
         }
     }
 }
