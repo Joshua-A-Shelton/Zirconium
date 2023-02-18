@@ -1,0 +1,8 @@
+﻿namespace test
+{
+    class GenericClass<T,S>
+    {
+        T member1;
+        S member2;
+    }
+}

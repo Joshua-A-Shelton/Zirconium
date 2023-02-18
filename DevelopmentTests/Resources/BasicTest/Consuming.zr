@@ -1,0 +1,9 @@
+﻿namespace basic
+{
+    public class consumingClass
+    {
+        public basicClass member1;
+        protected int32 member2;
+        private basicClass* member3;
+    }
+}

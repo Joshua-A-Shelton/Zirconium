@@ -1,0 +1,7 @@
+﻿namespace test
+{
+    class HyperConsumingGenericClass
+    {
+        SuperConsumingGenericClass<int32,double> member1;
+    }
+}

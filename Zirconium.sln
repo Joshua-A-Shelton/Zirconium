@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zrc", "Zrc\Zrc.csproj", "{ED202E4D-4A97-461C-8BAC-3F60D881F05F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentTests", "DevelopmentTests\DevelopmentTests.csproj", "{68463F93-7EE3-4433-B645-69FAA10AAEB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED202E4D-4A97-461C-8BAC-3F60D881F05F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED202E4D-4A97-461C-8BAC-3F60D881F05F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED202E4D-4A97-461C-8BAC-3F60D881F05F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED202E4D-4A97-461C-8BAC-3F60D881F05F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68463F93-7EE3-4433-B645-69FAA10AAEB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68463F93-7EE3-4433-B645-69FAA10AAEB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68463F93-7EE3-4433-B645-69FAA10AAEB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68463F93-7EE3-4433-B645-69FAA10AAEB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,11 @@
+﻿namespace basic
+{
+    public class basicClass
+    {
+        public int32 member1;
+        private int32 member2;
+        protected float member3;
+        double member4;
+        bool member5;
+    }
+}

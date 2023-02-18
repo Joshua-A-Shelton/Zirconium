@@ -1,0 +1,8 @@
+﻿namespace test
+{
+    class ConsumingGenericClass
+    {
+        GenericClass<float, int32> member1;
+        GenericClass<GenericClass<float,int32>, bool> member2;
+    }
+}

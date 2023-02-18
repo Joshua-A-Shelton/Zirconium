@@ -1,0 +1,10 @@
+﻿namespace test
+{
+    class SuperConsumingGenericClass<T,Y>
+    {
+        T member1;
+        Y member2;
+        GenericClass<T,Y> member3;
+        ConsumingGenericClass member4;
+    }
+}
