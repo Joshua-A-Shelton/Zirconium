@@ -51,6 +51,7 @@ if(PROJECT_IS_TOP_LEVEL)
             tests/cpp/CompileResult.h
             tests/cpp/InternalAccessErrors/InternalAccessErrors.cpp
             tests/cpp/InvalidTokenErrors/InvalidTokenErrors.cpp
+            tests/cpp/Class/Class.cpp
     )
 
     target_include_directories(ZirconiumTests PRIVATE tests/cpp src)
