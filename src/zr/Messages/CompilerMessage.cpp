@@ -5,17 +5,24 @@
 
 namespace zr
 {
-    CompilerMessage::CompilerMessage(CompilerMessageType type, const std::string& location, const std::string& message, const TextSpan& span):
+    CompilerMessage::CompilerMessage(CompilerMessageType type,CompilerMessageID id, const std::string& location,const TextSpan& span, const std::string& message):
         _type(type),
+        _id(id),
         _location(location),
-        _message(message),
-        _span(span)
+        _span(span),
+        _message(message)
+
     {
     }
 
     CompilerMessageType CompilerMessage::type() const
     {
         return _type;
+    }
+
+    CompilerMessageID CompilerMessage::id() const
+    {
+        return _id;
     }
 
     std::string CompilerMessage::location() const
@@ -48,7 +55,7 @@ namespace zr
                 out += "ERROR";
                 break;
         }
-        out += "] @\""+_location+"\" "+_span.toString() +" "+ _message+"}";
+        out += "] ID:"+std::to_string(_id)+" @\""+_location+"\" "+_span.toString() +" "+ _message+"}";
         return out;
     }
 
@@ -70,18 +77,19 @@ namespace zr
         std::smatch matches;
         auto startFrom = message.begin() + start;
         auto endAt = message.end();
-        std::regex_match(startFrom,endAt,matches,std::regex("^\\{\\[([a-zA-Z]+?)\\] \\@\\\"(.+?)\\\" \\(line: ([0-9]+), column: ([0-9]+)\\)-\\(line: ([0-9]+), column: ([0-9]+)\\) (.+?)\\}"));
+        std::regex_search(startFrom,endAt,matches,std::regex("^\\{\\[([a-zA-Z]+?)\\] ID:([0-9]+) \\@\\\"(.+?)\\\" \\(line: ([0-9]+), column: ([0-9]+)\\)-\\(line: ([0-9]+), column: ([0-9]+)\\) (.+?)\\}"));
         if (matches.size()==0)
         {
             throw std::invalid_argument("Invalid message format");
         }
-        std::string typeText = matches[0];
-        std::string locationText = matches[1];
-        std::string startLineText = matches[2];
-        std::string startColumnText = matches[3];
-        std::string endLineText = matches[4];
-        std::string endColumnText = matches[5];
-        std::string messageText = matches[6];
+        std::string typeText = matches[1];
+        std::string idText = matches[2];
+        std::string locationText = matches[3];
+        std::string startLineText = matches[4];
+        std::string startColumnText = matches[5];
+        std::string endLineText = matches[6];
+        std::string endColumnText = matches[7];
+        std::string messageText = matches[8];
 
         CompilerMessageType type = CompilerMessageType::INFORMATION;
 
@@ -102,6 +110,8 @@ namespace zr
             throw std::invalid_argument("Invalid message type provided");
         }
 
+        CompilerMessageID cid = (CompilerMessageID)std::stoi(idText);
+
         uint64_t startLine = std::stoull(startLineText);
         uint64_t startColumn = std::stoull(startColumnText);
         uint64_t endLine = std::stoull(endLineText);
@@ -109,11 +119,11 @@ namespace zr
 
         *readLength = matches.length();
 
-        return CompilerMessage(type,locationText,messageText,TextSpan(startLine,startColumn,endLine,endColumn));
+        return CompilerMessage(type,cid,locationText,TextSpan(startLine,startColumn,endLine,endColumn),messageText);
     }
 
     CompilerMessage CompilerMessage::InvalidToken(const std::string& location, const parsing::Token& invalidToken)
     {
-        return CompilerMessage(CompilerMessageType::ERROR,location,"Encountered invalid Token: "+invalidToken.text(),invalidToken.span());
+        return CompilerMessage(CompilerMessageType::ERROR,CompilerMessageID::INVALID_TOKEN,location,invalidToken.span(),"Encountered invalid Token: '"+invalidToken.text()+"'");
     }
 } // zr

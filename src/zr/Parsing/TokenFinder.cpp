@@ -13,7 +13,7 @@ namespace zr
         Token TokenFinder::find(const std::string& code, uint64_t cursor, uint64_t line, uint64_t column)
         {
             std::smatch match;
-            if (std::regex_match(code.begin()+cursor, code.end(),match, _regex,std::regex_constants::match_continuous))
+            if (std::regex_search(code.begin()+cursor, code.end(),match, _regex,std::regex_constants::match_continuous))
             {
                 auto text = match.str();
                 uint64_t endLine = line;
@@ -24,7 +24,7 @@ namespace zr
                     if (text[i] == '\n')
                     {
                         endLine++;
-                        endColumn = 0;
+                        endColumn = 1;
                     }
                 }
                 return Token(_type,TextSpan(line,column,endLine,endColumn),text);

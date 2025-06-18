@@ -97,6 +97,25 @@ namespace zr {
 
     std::string TextSpan::toString() const
     {
-        return (std::string("(line: "+_start.line())+(", column: "+_start.column())+(")-(line: "+_end.line())+(", column: "+_end.column())+")");
+        std::string rstring = "(line: ";
+        rstring += std::to_string(_start.line());
+        rstring += ", column: ";
+        rstring += std::to_string(_start.column());
+        rstring += ")-(line: ";
+        rstring += std::to_string(_end.line());
+        rstring += ", column: ";
+        rstring += std::to_string(_end.column());
+        rstring += ")";
+        return rstring;
+    }
+
+    bool TextSpan::operator==(const TextSpan& other) const
+    {
+        return _start == other._start && _end == other._end;
+    }
+
+    bool TextSpan::operator!=(const TextSpan& other) const
+    {
+        return _start != other._start || _end != other._end;
     }
 } // zr

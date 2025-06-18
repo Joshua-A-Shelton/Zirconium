@@ -18,8 +18,10 @@ CompileResult TestingUtilities::compile(const std::string& arguments)
 #define popen _popen
 #define pclose _pclose
 #define WEXITSTATUS
-#endif
     std::string call = "zrc "+arguments;
+#else
+    std::string call = "./zrc "+arguments;
+#endif
     FILE *pipe = popen(call.c_str(), "r");
     if (pipe == nullptr) {
         throw std::runtime_error("popen() failed!");

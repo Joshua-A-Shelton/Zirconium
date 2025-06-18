@@ -34,6 +34,8 @@ namespace zr
         TextLocation start() const;
         TextLocation end() const;
         std::string toString() const;
+        bool operator==(const TextSpan& other) const;
+        bool operator!=(const TextSpan& other) const;
     };
 } // zr
 

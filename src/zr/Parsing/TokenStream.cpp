@@ -33,11 +33,11 @@ namespace zr
 
             uint64_t currentCursor = 0;
             uint64_t currentLine = 1;
-            uint64_t currentColumn = 0;
+            uint64_t currentColumn = 1;
             std::vector<Token> unexpectedTokens;
             while (currentCursor < code.size())
             {
-                Token best(TokenType::NO_TOKEN,TextSpan(1,0,1,0),"");
+                Token best(TokenType::NO_TOKEN,TextSpan(1,1,1,1),"");
                 for (auto& finder : TOKEN_FINDERS)
                 {
                     auto found = finder.find(code,currentCursor,currentLine,currentColumn);
@@ -55,7 +55,10 @@ namespace zr
                 }
                 if (best == TokenType::NO_TOKEN)
                 {
-                    unexpectedTokens.push_back(Token(TokenType::INVALID_TOKEN,TextSpan(currentLine,currentColumn,currentLine,currentColumn+1),std::string(""+code[currentCursor])));
+                    char compsedString[2];
+                    compsedString[0] = code[currentCursor];
+                    compsedString[1] = '\0';
+                    unexpectedTokens.push_back(Token(TokenType::INVALID_TOKEN,TextSpan(currentLine,currentColumn,currentLine,currentColumn+1),compsedString));
                     currentColumn++;
                     currentCursor++;
                 }
@@ -111,7 +114,7 @@ namespace zr
             {
                 if (_tokens.empty())
                 {
-                    return Token(END_OF_FILE,TextSpan(1,0,1,0),"");
+                    return Token(END_OF_FILE,TextSpan(1,1,1,1),"");
                 }
                 auto& lastToken = _tokens.back();
                 return Token(END_OF_FILE,TextSpan(lastToken.span().end(),lastToken.span().end()),"");
@@ -126,7 +129,7 @@ namespace zr
             {
                 if (_tokens.empty())
                 {
-                    return Token(END_OF_FILE,TextSpan(1,0,1,0),"");
+                    return Token(END_OF_FILE,TextSpan(1,1,1,1),"");
                 }
                 auto& lastToken = _tokens.back();
                 return Token(END_OF_FILE,TextSpan(lastToken.span().end(),lastToken.span().end()),"");

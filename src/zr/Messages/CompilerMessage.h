@@ -13,17 +13,24 @@ namespace zr
         ERROR
     };
 
+    enum CompilerMessageID
+    {
+        INVALID_TOKEN,
+    };
+
     class CompilerMessage
     {
     private:
         CompilerMessageType _type;
+        CompilerMessageID _id;
         std::string _location;
         std::string _message;
         TextSpan _span;
-        CompilerMessage(CompilerMessageType type, const std::string& location, const std::string& message, const TextSpan& span);
+        CompilerMessage(CompilerMessageType type, CompilerMessageID id, const std::string& location,const TextSpan& span, const std::string& message);
 
     public:
         CompilerMessageType type() const;
+        CompilerMessageID id() const;
         std::string location() const;
         std::string message() const;
         TextSpan span() const;

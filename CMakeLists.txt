@@ -50,7 +50,8 @@ if(PROJECT_IS_TOP_LEVEL)
             tests/cpp/CompileResult.cpp
             tests/cpp/CompileResult.h
             tests/cpp/InternalAccessErrors/InternalAccessErrors.cpp
-            )
+            tests/cpp/InvalidTokenErrors/InvalidTokenErrors.cpp
+    )
 
     target_include_directories(ZirconiumTests PRIVATE tests/cpp src)
     target_link_libraries(ZirconiumTests GTest::gtest_main zr)

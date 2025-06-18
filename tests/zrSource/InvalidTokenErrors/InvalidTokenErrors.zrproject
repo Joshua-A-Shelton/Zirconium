@@ -1,0 +1,7 @@
+{
+    "output" : "Static Library",
+    "compileFiles" :
+    [
+        "InvalidTokenErrors.zr"
+    ]
+}

@@ -33,18 +33,15 @@ namespace zr
                 throw std::runtime_error("Unknown output type in: "+filePath.string());
             }
             auto compileFiles = data["compileFiles"];
+            auto root = filePath.parent_path();
             for (const auto& compileFile : compileFiles)
             {
-                _sourceFiles.push_back(compileFile.get<std::string>());
+                _sourceFiles.push_back(root.string()+"/"+ compileFile.get<std::string>());
             }
         }
         catch (nlohmann::json::parse_error& pe)
         {
-            std::cout << "Malformed JSON in project file"<< filePath << "\n";
-        }
-        catch (std::exception& e)
-        {
-            std::cout << e.what() << std::endl;
+            throw std::runtime_error("Malformed JSON in project file "+ filePath.string());
         }
 
     }

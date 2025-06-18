@@ -45,7 +45,7 @@ int main(int arc, char** argv)
     std::cout << "building "<< projectPath.filename() << std::endl;
 
     zr::CompilerRunData runData;
-    for (auto file: settings.sourceFiles())
+    for (auto& file: settings.sourceFiles())
     {
         zr::parsing::TokenStream tokens(file,runData);
         //TODO: parse the token streams into data structures
