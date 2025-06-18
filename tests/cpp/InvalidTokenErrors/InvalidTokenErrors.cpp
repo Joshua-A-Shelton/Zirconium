@@ -21,9 +21,8 @@ TEST(InvalidTokenErrorsTest,InvalidTokenErrors)
         auto& message = output[i];
         if (message.id() == zr::INVALID_TOKEN)
         {
-            std::cout << message.toString() << std::endl;
             ++errorCount;
-            auto erased = std::erase_if(invalidLocations,[&](zr::TextSpan span){return message.span()==span;});
+            std::erase_if(invalidLocations,[&](zr::TextSpan span){return message.span()==span;});
         }
     }
     GTEST_ASSERT_EQ(invalidLocations.size(), 0);
