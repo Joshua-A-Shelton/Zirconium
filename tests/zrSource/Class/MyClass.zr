@@ -1,0 +1,20 @@
+public class MyClass
+{
+    public int32 MyFirstNumber;
+    private int32 _mySecondNumber;
+    public int32 MyProduct {get{return MyFirstNumber * _mySecondNumber;}}
+    public int32 MyGetterSetter {get; set;}
+    public int32 MyProtectedGetterSetter {get; private set;}
+    protected int32 _myProtectedNumber;
+    internal int32 _myInternalNumber;
+
+    public MyClass()
+    {
+        MyFirstNumber = 1;
+        _mySecondNumber = 3;
+        MyGetterSetter = -40;
+        MyProtectedGetterSetter = 10;
+        _myProtectNumber = 0;
+        _myInternalNumber = -5;
+    }
+}

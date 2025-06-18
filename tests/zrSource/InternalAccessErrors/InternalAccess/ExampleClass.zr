@@ -1,0 +1,45 @@
+namespace InternalAccess
+{
+    public class ExampleClass
+    {
+        public int32 Thing1;
+        private int32 _thing2;
+        protected int32 _thing3;
+
+        public int32 Prop1{get; set;}
+        public int32 Prop2{get; private set;}
+        public int32 Prop3{get; protected set;}
+        private int32 _prop4{get;set;}
+        protected int32 _prop5{get;set;}
+        protected int32 _prop6{get; private set;}
+
+        public int32 Func1()
+        {
+            return 1;
+        }
+
+        private int32 Func2()
+        {
+            return 2;
+        }
+
+        protected int32 Func3()
+        {
+            return 3;
+        }
+
+        private ExampleClass()
+        {
+            Thing1 = Func1();
+            _thing2 = Func2();
+            _thing3 = Func3();
+
+            Prop1 = 1;
+            Prop2 = 2;
+            Prop3 = 3;
+            _prop4 = 4;
+            _prop5 = 5;
+            _prop6 = 6;
+        }
+    }
+}

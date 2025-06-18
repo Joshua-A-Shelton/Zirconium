@@ -1,0 +1,7 @@
+using System;
+
+public int32 main()
+{
+    System::StandardOut.WriteLine("Hello, World");
+    return 0;
+}

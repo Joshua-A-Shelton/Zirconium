@@ -1,0 +1,19 @@
+using namespace InternalAccess;
+public int32 main()
+{
+    ExampleClass myClass();
+    myClass.Thing1 = 1;
+    myClass._thing2 = 2;
+    myClass._thing3 = 3;
+    myClass.Prop1 = 1;
+    myClass.Prop2 = 2;
+    myClass.Prop3 = 3;
+    myClass._prop4 = 4;
+    myClass._prop5 = 5;
+    myClass._prop6 = 6;
+    var v1 = myClass.Func1();
+    var v2 = myClass.Func2();
+    var v3 = myClass.Func3();
+
+    return 0;
+}

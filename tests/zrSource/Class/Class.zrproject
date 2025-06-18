@@ -1,0 +1,7 @@
+{
+    "output" : "Static Library",
+    "compileFiles" :
+    [
+        "MyClass.zr"
+    ]
+}
