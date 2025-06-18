@@ -1,5 +1,5 @@
 using namespace InternalAccess;
-public int32 main()
+public int32 Main()
 {
     ExampleClass myClass();
     myClass.Thing1 = 1;

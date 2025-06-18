@@ -1,4 +1,4 @@
-public int32 main()
+public int32 Main()
 {
     \\var`` = "a string with ☺ in it"
     int32 value = ☺;

@@ -1,6 +1,6 @@
 using System;
 
-public int32 main()
+public int32 Main()
 {
     System::StandardOut.WriteLine("Hello, World");
     return 0;
