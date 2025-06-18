@@ -21,15 +21,34 @@ namespace zr
                 for (int i=0; i<text.size(); i++)
                 {
                     endColumn++;
+                    //account of UTF8 encoding
+                    unsigned char curByte = text[i];
+                    if ((curByte & 0b11110000) == 0b11110000)
+                    {
+                        i+=3;
+                        continue;
+                    }
+                    else if ((curByte & 0b11100000) == 0b11100000)
+                    {
+                        i+=2;
+                        continue;
+                    }
+                    else if ((curByte & 0b11000000) == 0b11000000)
+                    {
+                        i+=1;
+                        continue;
+                    }
+                    //end UTF8
+                    //check for newline
                     if (text[i] == '\n')
                     {
                         endLine++;
                         endColumn = 1;
                     }
                 }
-                return Token(_type,TextSpan(line,column,endLine,endColumn),text);
+                return Token(_type,TextSpan(line,column,endLine,endColumn),cursor,text.length(),text);
             }
-            return Token(TokenType::NO_TOKEN,TextSpan(0,0,0,0),"");
+            return Token(TokenType::NO_TOKEN,TextSpan(0,0,0,0),0,0,"");
         }
     } // parsing
 } // zr

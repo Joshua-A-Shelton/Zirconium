@@ -1,6 +1,6 @@
 public int32 main()
 {
-    \\var``
+    \\var`` = "a string with ☺ in it"
     int32 value = ☺;
     return 0;
 }

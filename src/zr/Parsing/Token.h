@@ -71,6 +71,10 @@ DEFINITION(ACCESSOR,"::",MAIN_CHANNEL,"\\:\\:")\
 DEFINITION(SEMICOLON,";",MAIN_CHANNEL,"\\;")\
 DEFINITION(INCREMENT, "++",MAIN_CHANNEL,"\\+\\+")\
 DEFINITION(DECREMENT, "--",MAIN_CHANNEL,"\\-\\-")\
+DEFINITION(LITERAL_INTEGER, "Integer Literal", MAIN_CHANNEL,"[0-9]+")\
+DEFINITION(LITERAL_DOUBLE, "Double Literal", MAIN_CHANNEL,"[0-9]*\\.[0-9]+")\
+DEFINITION(LITERAL_FlOAT, "Float Literal", MAIN_CHANNEL,"[0-9]*\\.[0-9]+f")\
+DEFINITION(LITERAL_STRING, "String Literal", MAIN_CHANNEL,"\"((\\\")|[^\"])*\"")\
 DEFINITION(IDENTIFIER, "Identifier", MAIN_CHANNEL,"[_a-zA-Z][_a-zA-Z0-9]*")\
 
 
@@ -100,12 +104,17 @@ namespace zr
         private:
             TokenType _type;
             TextSpan _span;
+            uint64_t _streamPosition;
+            uint64_t _streamLength;
             std::string _text;
 
         public:
-            Token(TokenType type, TextSpan span, const std::string& text);
+            Token(TokenType type, TextSpan span, uint64_t streamPosition, uint64_t streamLength, const std::string& text);
             TokenType type() const;
             const TextSpan& span() const;
+            uint64_t streamPosition() const;
+            uint64_t streamLength() const;
+            uint64_t streamEndPosition() const;
             const std::string& text() const;
             TokenChannel channel() const;
 

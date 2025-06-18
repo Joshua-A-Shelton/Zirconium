@@ -37,7 +37,7 @@ namespace zr
             std::vector<Token> unexpectedTokens;
             while (currentCursor < code.size())
             {
-                Token best(TokenType::NO_TOKEN,TextSpan(1,1,1,1),"");
+                Token best(TokenType::NO_TOKEN,TextSpan(1,1,1,1),0,0,"");
                 for (auto& finder : TOKEN_FINDERS)
                 {
                     auto found = finder.find(code,currentCursor,currentLine,currentColumn);
@@ -55,12 +55,26 @@ namespace zr
                 }
                 if (best == TokenType::NO_TOKEN)
                 {
-                    char compsedString[2];
-                    compsedString[0] = code[currentCursor];
-                    compsedString[1] = '\0';
-                    unexpectedTokens.push_back(Token(TokenType::INVALID_TOKEN,TextSpan(currentLine,currentColumn,currentLine,currentColumn+1),compsedString));
+                    char composedString[5] = {'\0'};
+                    composedString[0] = code[currentCursor];
+                    uint64_t codePointLength = 1;
+                    if ((code[currentCursor] & 0b11110000) == 0b11110000)
+                    {
+                        codePointLength=4;
+                    }
+                    else if ((code[currentCursor] & 0b11100000) == 0b11100000)
+                    {
+                        codePointLength=3;
+                    }
+                    else if ((code[currentCursor] & 0b11000000) == 0b11000000)
+                    {
+                        codePointLength=2;
+                        continue;
+                    }
+
+                    unexpectedTokens.push_back(Token(TokenType::INVALID_TOKEN,TextSpan(currentLine,currentColumn,currentLine,currentColumn+1),currentCursor,codePointLength,composedString));
                     currentColumn++;
-                    currentCursor++;
+                    currentCursor+=codePointLength;
                 }
                 else
                 {
@@ -71,7 +85,7 @@ namespace zr
                         {
                             allText+=unexpectedTokens[i].text();
                         }
-                        _tokens.push_back(Token(TokenType::INVALID_TOKEN,TextSpan(unexpectedTokens[0].span().start(),unexpectedTokens[unexpectedTokens.size()-1].span().end()),allText));
+                        _tokens.push_back(Token(TokenType::INVALID_TOKEN,TextSpan(unexpectedTokens[0].span().start(),unexpectedTokens[unexpectedTokens.size()-1].span().end()),unexpectedTokens[0].streamPosition(),allText.length(),allText));
                         compileData.addMessage(CompilerMessage::InvalidToken(absolute(filePath).string(),_tokens.back()));
                         unexpectedTokens.clear();
                     }
@@ -91,7 +105,7 @@ namespace zr
                 {
                     allText+=unexpectedTokens[i].text();
                 }
-                _tokens.push_back(Token(TokenType::INVALID_TOKEN,TextSpan(unexpectedTokens[0].span().start(),unexpectedTokens[unexpectedTokens.size()-1].span().end()),allText));
+                _tokens.push_back(Token(TokenType::INVALID_TOKEN,TextSpan(unexpectedTokens[0].span().start(),unexpectedTokens[unexpectedTokens.size()-1].span().end()),unexpectedTokens[0].streamPosition(),allText.length(),allText));
                 compileData.addMessage(CompilerMessage::InvalidToken(absolute(filePath).string(),_tokens.back()));
                 unexpectedTokens.clear();
             }
@@ -114,10 +128,10 @@ namespace zr
             {
                 if (_tokens.empty())
                 {
-                    return Token(END_OF_FILE,TextSpan(1,1,1,1),"");
+                    return Token(END_OF_FILE,TextSpan(1,1,1,1),0,0,"");
                 }
                 auto& lastToken = _tokens.back();
-                return Token(END_OF_FILE,TextSpan(lastToken.span().end(),lastToken.span().end()),"");
+                return Token(END_OF_FILE,TextSpan(lastToken.span().end(),lastToken.span().end()),lastToken.streamEndPosition(),0,"");
             }
             auto& token = _tokens[_cursor];
             return _tokens[_cursor++];
@@ -129,10 +143,10 @@ namespace zr
             {
                 if (_tokens.empty())
                 {
-                    return Token(END_OF_FILE,TextSpan(1,1,1,1),"");
+                    return Token(END_OF_FILE,TextSpan(1,1,1,1),0,0,"");
                 }
                 auto& lastToken = _tokens.back();
-                return Token(END_OF_FILE,TextSpan(lastToken.span().end(),lastToken.span().end()),"");
+                return Token(END_OF_FILE,TextSpan(lastToken.span().end(),lastToken.span().end()),lastToken.streamEndPosition(),0,"");
             }
             return _tokens[_cursor];
         }

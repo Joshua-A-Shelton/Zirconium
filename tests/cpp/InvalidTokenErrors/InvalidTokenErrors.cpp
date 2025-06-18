@@ -12,15 +12,16 @@ TEST(InvalidTokenErrorsTest,InvalidTokenErrors)
     {
         zr::TextSpan(3,5,3,7),
         zr::TextSpan(3,10,3,12),
-        zr::TextSpan(4,19,4,22),
-        zr::TextSpan(5,12,5,13),
-        zr::TextSpan(7,11,7,14),
+        zr::TextSpan(4,19,4,20),
+        zr::TextSpan(7,1,7,4),
+        zr::TextSpan(7,5,7,6),
     };
     for (auto i=0; i<output.size(); i++)
     {
         auto& message = output[i];
         if (message.id() == zr::INVALID_TOKEN)
         {
+            std::cout << message.toString() << std::endl;
             ++errorCount;
             auto erased = std::erase_if(invalidLocations,[&](zr::TextSpan span){return message.span()==span;});
         }
