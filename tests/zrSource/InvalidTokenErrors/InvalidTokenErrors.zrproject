@@ -1,7 +1,13 @@
 {
-    "output" : "Static Library",
-    "compileFiles" :
+    "targets" :
     [
-        "InvalidTokenErrors.zr"
+        {
+            "name" : "InvalidTokenErrors"
+            "output" : "Static Library",
+            "compileFiles" :
+            [
+                "InvalidTokenErrors.zr"
+            ]
+        }
     ]
 }

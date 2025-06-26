@@ -1,0 +1,7 @@
+public int32 Main()
+{
+    OwningObject owningObject;
+    OwningObject owningObject2 = owningObject;
+    OwningObject owningObject3 = owningObject;
+    return 0;
+}

@@ -24,6 +24,7 @@ DEFINITION(KEYWORD_INTERNAL, "Keyword: 'internal'",MAIN_CHANNEL,"internal")\
 DEFINITION(KEYWORD_NAMESPACE, "Keyword: 'namespace'",MAIN_CHANNEL,"namespace")\
 DEFINITION(KEYWORD_NEW, "Keyword: 'new'",MAIN_CHANNEL,"new")\
 DEFINITION(KEYWORD_NULL,"Keyword: 'null'",MAIN_CHANNEL,"null")\
+DEFINITION(KEYWORD_OWNED,"Keyword: 'owned'",MAIN_CHANNEL,"owned")\
 DEFINITION(KEYWORD_PUBLIC, "Keyword: 'public'",MAIN_CHANNEL,"public")\
 DEFINITION(KEYWORD_PRIVATE, "Keyword: 'private'",MAIN_CHANNEL,"private")\
 DEFINITION(KEYWORD_PROTECTED, "Keyword: 'protected'",MAIN_CHANNEL,"protected")\

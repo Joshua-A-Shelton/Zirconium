@@ -1,0 +1,33 @@
+{
+    "targets" :
+    [
+        {
+            "name" : "OwnedPointerDestructor",
+            "output" : "Executable",
+            "compileFiles" :
+            [
+                "DestructorMain.zr",
+                "OwningObject.zr"
+            ]
+        },
+        {
+            "name" : "OwnedPointerMove".
+            "output" : "Executable",
+            "compileFiles" :
+            [
+                "MoveMain.zr",
+                "OwningObject.zr"
+            ]
+        },
+        {
+                    "name" : "OwnedPointerMoveFail".
+                    "output" : "Executable",
+                    "compileFiles" :
+                    [
+                        "MoveFailMain.zr",
+                        "OwningObject.zr"
+                    ]
+                }
+    ]
+
+}

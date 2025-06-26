@@ -12,6 +12,8 @@ int main(int arc, char** argv)
     desc.add_options()
     ("help,h", "produce help message")
     ("project,p", po::value<std::string>(), "path to project file")
+    ("target,t", po::value<std::string>()->default_value("all"), "target(s) binary in project to build")
+    ("arch,a", po::value<std::string>()->default_value("host"), "output architecture of build")
     ;
 
     po::positional_options_description positional;
@@ -45,11 +47,51 @@ int main(int arc, char** argv)
     std::cout << "building "<< projectPath.filename() << std::endl;
 
     zr::CompilerRunData runData;
-    for (auto& file: settings.sourceFiles())
+    //get targets
+    std::vector<std::string> targets;
+    if (vm.count("target") && vm["target"].as<std::string>() != "all")
     {
-        zr::parsing::TokenStream tokens(file,runData);
-        //TODO: parse the token streams into data structures
+        std::string targetString = vm["target"].as<std::string>();
+        std::stringstream ss(targetString);
+        std::string segment;
+        while (std::getline(ss,segment,','))
+        {
+            bool foundTarget = false;
+            for (auto i=0; i< settings.targets().size(); i++)
+            {
+                if (settings.targets()[i].name() == segment)
+                {
+                    foundTarget = true;
+                    targets.push_back(segment);
+                }
+            }
+            if (!foundTarget)
+            {
+                std::cout << "invalid target "<< segment << std::endl;
+                return EXIT_FAILURE;
+            }
+        }
     }
+    else
+    {
+        for (auto& target: settings.targets())
+        {
+            targets.push_back(target.name());
+        }
+    }
+
+    for (auto& target: settings.targets())
+    {
+        if (std::find(targets.begin(),targets.end(),target.name()) != targets.end())
+        {
+            for (auto& file: target.sourceFiles())
+            {
+                zr::parsing::TokenStream tokens(file,runData);
+                //TODO: parse the token streams into data structures
+            }
+        }
+    }
+
 
     bool error = false;
     for (auto& message: runData.messages())

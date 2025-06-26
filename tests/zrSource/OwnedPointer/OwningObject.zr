@@ -1,0 +1,19 @@
+using System;
+
+public class OwnedObject
+{
+    public int32 data;
+    ~OwnedObject()
+    {
+        System::StandardOut.WriteLine("Deleting Owned");
+    }
+}
+
+public class OwningObject
+{
+    private owned OwnedObject* _ownedObject;
+    public OwningObject()
+    {
+        _ownedObject = new OwnedObject();
+    }
+}

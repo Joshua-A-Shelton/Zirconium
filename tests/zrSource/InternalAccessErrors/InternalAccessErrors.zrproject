@@ -1,7 +1,14 @@
 {
-    "output" : "Executable",
-    "compileFiles" :
+    "targets" :
     [
-        "InternalAccessErrors.zr"
+        {
+            "name" : "InternalAccessErrors"
+            "output" : "Executable",
+            "compileFiles" :
+            [
+                "InternalAccessErrors.zr"
+            ]
+        }
     ]
+
 }

@@ -1,7 +1,13 @@
 {
-    "output" : "Static Library",
-    "compileFiles" :
+    "targets":
     [
-        "MyClass.zr"
+        {
+            "name" : "MyClass"
+            "output" : "Static Library",
+            "compileFiles" :
+            [
+                "MyClass.zr"
+            ]
+        }
     ]
 }

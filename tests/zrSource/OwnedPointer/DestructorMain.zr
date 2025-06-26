@@ -1,0 +1,8 @@
+public int32 Main()
+{
+    for(int32 i=0; i< 3; i++)
+    {
+        OwningObject owningObject;
+    }
+    return 0;
+}

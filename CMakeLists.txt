@@ -28,7 +28,7 @@ add_library(zr
         src/zr/Parsing/Token.h
 )
 
-target_link_libraries(zr PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(zr PUBLIC nlohmann_json::nlohmann_json)
 
 add_executable(zrc compiler/Main.cpp)
 target_include_directories(zrc PUBLIC src)
@@ -52,6 +52,7 @@ if(PROJECT_IS_TOP_LEVEL)
             tests/cpp/InternalAccessErrors/InternalAccessErrors.cpp
             tests/cpp/InvalidTokenErrors/InvalidTokenErrors.cpp
             tests/cpp/Class/Class.cpp
+            tests/cpp/OwnedClass/OwnedClass.cpp
     )
 
     target_include_directories(ZirconiumTests PRIVATE tests/cpp src)

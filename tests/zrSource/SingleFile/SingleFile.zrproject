@@ -1,7 +1,13 @@
 {
-    "output" : "Executable",
-    "compileFiles" :
+    "targets":
     [
-        "Main.zr"
+        {
+            "name" : "SingleFile"
+            "output" : "Executable",
+            "compileFiles" :
+            [
+                "Main.zr"
+            ]
+        }
     ]
 }
